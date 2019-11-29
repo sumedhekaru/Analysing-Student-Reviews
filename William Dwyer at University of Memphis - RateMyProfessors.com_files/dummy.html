@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!-- saved from url=(0048)https://widgets.weather.com/v2/assets/dummy.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script>
+    function getCookies() {
+      function getHttpCookie(name) {
+        const regex = new RegExp(name + '=(.+?(?=&|$))');
+        return document.cookie.match(regex);
+      }
+      window.addEventListener(
+        'message',
+        function(e) {
+          // console.log('postmessage 3', e);
+        }, false);
+
+      var country = getHttpCookie('TWC-GeoIP-Country');
+      var cc = country ? country[1] : 'US';
+      var lat = getHttpCookie('TWC-GeoIP-Lat');
+      var lng = getHttpCookie('TWC-GeoIP-Long');
+
+      if(lat && lng) {
+        parent.postMessage({geo: {lat: lat[1], lng: lng[1]}, country: cc, config: {}, twcIframe: true}, '*');
+      } else {
+        parent.postMessage({geo: null, country: cc, config: {}, twcIframe: true}, '*');
+      }
+    }
+  </script>
+</head>
+
+<body onload="getCookies()">
+
+</body></html>
